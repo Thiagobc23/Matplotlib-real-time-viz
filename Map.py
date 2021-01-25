@@ -6,13 +6,16 @@ import geopandas as gpd
 
 # function to update the data
 def my_function(i):
-    df = pd.read_excel('w.xlsx', engine='openpyxl')
+    try:
+        df = pd.read_excel('w.xlsx', engine='openpyxl')
+    except:
+        print('error reading file')
     world_values = world.merge(df, how='right', on='name', copy=True)
     # clear axis
     ax.cla()
     ax1.cla()
     
-    world_values.plot(column='Val', ax=ax1, cmap='coolwarm_r', edgecolors='black', linewidths=0.5, alpha=0.8)
+    world_values.plot(column='Val', ax=ax1, cmap='coolwarm', edgecolors='black', linewidths=0.5, alpha=0.8)
     # remove spines
     ax1.spines['left'].set_visible(False)
     ax1.spines['right'].set_visible(False)
@@ -37,7 +40,7 @@ ax.set_facecolor('#707576')
 ax1.set_facecolor('#707576')
 
 # animate
-ani = FuncAnimation(fig, my_function, interval=5000)
+ani = FuncAnimation(fig, my_function, interval=500)
 
 fig.tight_layout()
 plt.show()
